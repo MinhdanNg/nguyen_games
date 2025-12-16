@@ -3,6 +3,19 @@ import './App.css'
 import themesData from "./themes";
 
 function App() {
+
+return (
+  <div className="black">
+    <div className="hiddenText">
+      <p>hemmelig tekst</p>
+    </div>
+  </div>
+    )
+}
+
+
+/**
+function App() {
   const [currentQuestion, setCurrentQuestion] = useState({});
   const [themes, setThemes] = useState(themesData);
   const [displayQuestion, setDisplayQuestion] = useState(false);
@@ -46,5 +59,5 @@ function App() {
     </>
   )
 }
-
+**/
 export default App
