@@ -1,0 +1,255 @@
+
+/* ===========================
+   Christmas Scoreboard (Mobile-first)
+   =========================== */
+
+/* Color palette variables for easy tweaking */
+:root {
+  --bg: #f7fafc;                   /* light snowy background */
+  --bg-gradient-top: #fdfdfd;
+  --bg-gradient-bottom: #eef6ff;
+  --card: #ffffff;
+  --text: #22303c;
+  --muted: #6b7785;
+
+  --green: #2e7d32;                /* holly green */
+  --red: #c62828;                  /* candy red */
+  --gold: #caa245;                 /* ornament gold */
+  --accent: #0ea5e9;               /* icy blue accent */
+
+  --shadow: 0 4px 16px rgba(0, 0, 0, 0.08);
+  --radius: 12px;
+}
+
+/* Global reset-ish */
+* { box-sizing: border-box; }
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+/* Container */
+.scoreboard {
+  max-width: 480px;                /* mobile-first width */
+  margin: 0 auto;
+  padding: 16px;
+}
+
+/* Header */
+.sb-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+}
+.sb-header h1 {
+  font-size: 1.6rem;
+  margin: 0;
+  color: var(--green);
+  text-shadow: 0 1px 0 #fff;
+  letter-spacing: 0.3px;
+}
+.sb-subtitle {
+  margin-top: 6px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.9rem;
+}
+
+/* Card/list wrapper */
+.sb-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  background-color: var(--card);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow);
+  overflow: hidden;
+  border: 1px solid rgba(0,0,0,0.05);
+}
+
+/* A festive stripe on top of the card */
+.sb-list::before {
+  content: "";
+  display: block;
+  height: 6px;
+  background: linear-gradient(90deg, var(--red), var(--gold), var(--green));
+}
+
+/* Individual rows: flex layout for rank • team • score */
+.sb-item {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 12px 14px;
+  border-bottom: 1px solid #f0f3f6;
+}
+.sb-item:last-child {
+  border-bottom: none;
+}
+
+/* Rank badge */
+.sb-rank {
+  flex: 0 0 auto;
+  min-width: 34px;
+  height: 34px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(180deg, #fff, #f5f5f5);
+  border: 2px solid var(--accent);
+  color: var(--accent);
+  font-weight: 700;
+  border-radius: 999px;
+  box-shadow: 0 2px 6px rgba(14, 165, 233, 0.15);
+}
+
+/* Team name (flex-grow) */
+.sb-team {
+  flex: 1 1 auto;
+  font-weight: 600;
+  color: var(--text);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+/* Score pill */
+.sb-score {
+  flex: 0 0 auto;
+  min-width: 54px;
+  text-align: center;
+  font-weight: 700;
+  color: var(--red);
+  background: rgba(198, 40, 40, 0.08);
+  border: 1px solid rgba(198, 40, 40, 0.25);
+  border-radius: 999px;
+  padding: 6px 10px;
+}
+
+/* Top 3 styling */
+.sb-item--top1 .sb-rank,
+.sb-item--top1 .sb-score {
+  color: var(--gold);
+  border-color: var(--gold);
+  background: rgba(202, 162, 69, 0.08);
+}
+.sb-item--top2 .sb-rank,
+.sb-item--top2 .sb-score {
+  color: #7f8c8d;
+  border-color: #7f8c8d;
+  background: rgba(127, 140, 141, 0.1);
+}
+.sb-item--top3 .sb-rank,
+.sb-item--top3 .sb-score {
+  color: #a97142; /* bronze */
+  border-color: #a97142;
+  background: rgba(169, 113, 66, 0.1);
+}
+
+/* Mild hover/tap feedback */
+.sb-item:active,
+.sb-item:hover {
+  background-color: #f9fbfd;
+}
+
+/* Footer note or controls area */
+.sb-footer {
+  margin-top: 10px;
+  text-align: center;
+  color: var(--muted);
+  font-size: 0.85rem;
+}
+
+/* Responsive tweaks */
+@media (min-width: 420px) {
+  .sb-header h1 { font-size: 1.8rem; }
+  .sb-item { padding: 14px 16px; }
+  .sb-rank { min-width: 36px; height: 36px; }
+  .sb-score { min-width: 60px; }
+}
+
+/* Dark mode (optional; respects system preference) */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-gradient-top: #0b1220;
+    --bg-gradient-bottom: #111827;
+    --card: #0f172a;
+    --text: #e5e7eb;
+    --muted: #9aa5b1;
+    --accent: #60a5fa;
+  }
+  .sb-list { border-color: rgba(255,255,255,0.06); }
+  .sb-item { border-bottom-color: rgba(255,255,255,0.08); }
+  .sb-item:hover { background-color: rgba(255,255,255,0.03); }
+  .sb-rank {
+    background: linear-gradient(180deg, #0f172a, #0b1323);
+    border-color: var(--accent);
+    color: var(--accent);
+  }
+  .sb-score {
+    color: #f87171;
+    background: rgba(248, 113, 113, 0.12);
+    border-color: rgba(248, 113, 113, 0.3);
+  }
+
+body {
+  font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 50% -200px, var(--bg-gradient-top), transparent),
+    linear-gradient(to bottom, var(--bg-gradient-top), var(--bg-gradient-bottom));
+}
+}
+
+/* customizable snowflake styling */
+.snowflake {
+  color: #fff;
+  font-size: 1em;
+  font-family: Arial, sans-serif;
+  text-shadow: 0 0 5px #000;
+}
+ 
+.snowflake,.snowflake 
+.inner{animation-iteration-count:infinite;animation-play-state:running}
+
+@keyframes snowflakes-fall{0%{transform:translateY(0)}100%{transform:translateY(110vh)}}
+
+@keyframes snowflakes-shake{0%,100%{transform:translateX(0)}50%{transform:translateX(80px)}}
+
+.snowflake{position:fixed;
+    top:-10%;z-index:9999;
+    -webkit-user-select:none;
+    user-select:none;
+    cursor:default;
+    pointer-events:none;
+    animation-name:snowflakes-shake;
+    animation-duration:3s;
+    animation-timing-function:ease-in-out}
+    .snowflake 
+    .inner{animation-duration:10s;
+        animation-name:snowflakes-fall;
+        animation-timing-function:linear}
+        .snowflake:nth-of-type(0)
+        {left:1%;animation-delay:0s}
+        .snowflake:nth-of-type(0) 
+        .inner{animation-delay:0s}
+        .snowflake:first-of-type{left:10%;animation-delay:1s}
+        .snowflake:first-of-type .inner,
+        .snowflake:nth-of-type(8) .inner{animation-delay:1s}
+        .snowflake:nth-of-type(2){left:20%;animation-delay:.5s}
+        .snowflake:nth-of-type(2) .inner,.snowflake:nth-of-type(6) 
+        .inner{animation-delay:6s}
+        .snowflake:nth-of-type(3){left:30%;animation-delay:2s}
+        .snowflake:nth-of-type(11) .inner,.snowflake:nth-of-type(3) 
+        .inner{animation-delay:4s}.snowflake:nth-of-type(4){left:40%;animation-delay:2s}
+        .snowflake:nth-of-type(10) .inner,.snowflake:nth-of-type(4) .inner{animation-delay:2s}
+        .snowflake:nth-of-type(5){left:50%;animation-delay:3s}.snowflake:nth-of-type(5) .inner{animation-delay:8s}
+        .snowflake:nth-of-type(6){left:60%;animation-delay:2s}.snowflake:nth-of-type(7){left:70%;animation-delay:1s}
+        .snowflake:nth-of-type(7) .inner{animation-delay:2.5s}.snowflake:nth-of-type(8){left:80%;animation-delay:0s}
+        .snowflake:nth-of-type(9){left:90%;animation-delay:1.5s}.snowflake:nth-of-type(9) 
+.inner{animation-delay:3s}.snowflake:nth-of-type(10){left:25%;animation-delay:0s}.snowflake:nth-of-type(11){left:65%;animation-delay:2.5s}

@@ -1,0 +1,65 @@
+
+:root {
+  --bg1: #0b3d2e; --bg2: #123f3a; --card: #ffffff; --text: #21313f; --muted: #6b7785;
+  --gold: #caa245; --red: #c62828; --green: #2e7d32; --accent: #0ea5e9;
+  --tile-brown: #4e2f25; --tile-brown-dark: #3c241d; --tile-highlight: rgba(255,255,255,0.15);
+  --radius: 14px; --shadow: 0 8px 20px rgba(0,0,0,0.18);
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; padding: 0; }
+body {
+  font-family: system-ui, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  color: var(--text);
+  background:
+    radial-gradient(1200px 600px at 50% -200px, #0f503f, transparent),
+    linear-gradient(180deg, var(--bg1), var(--bg2));
+}
+.advent-root { max-width: 480px; margin: 0 auto; padding: 16px; }
+.advent-header h1 { margin: 0; font-size: 1.6rem; color: #fff; text-shadow: 0 1px 0 rgba(0,0,0,0.4); }
+.advent-subtitle { margin: 6px 0 12px; color: #e6f7f0; font-size: 0.95rem; }
+.team-input { display: grid; gap: 6px; margin-bottom: 12px; }
+.team-input label { color: #daf6ea; font-size: 0.85rem; }
+.team-input input { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.9); }
+.loading { color: #fff; opacity: 0.85; }
+.advent-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
+.advent-tile {
+  position: relative; display: inline-flex; align-items: center; justify-content: center;
+  aspect-ratio: 1 / 1; border-radius: 12px;
+  background: radial-gradient(60% 60% at 50% 35%, var(--tile-highlight), transparent),
+              linear-gradient(180deg, var(--tile-brown), var(--tile-brown-dark));
+  color: #fff; box-shadow: var(--shadow); border: 1px solid rgba(255,255,255,0.06);
+  transform: translateZ(0); transition: transform 120ms ease, filter 120ms ease;
+}
+.advent-tile:active, .advent-tile:hover { transform: translateY(-2px); filter: brightness(1.05); }
+.advent-tile--inactive { opacity: 0.5; filter: grayscale(0.5); pointer-events: none; }
+.tile-number { font-size: 1.4rem; font-weight: 700; text-shadow: 0 1px 0 rgba(0,0,0,0.35); }
+.tile-dot { position: absolute; bottom: 8px; right: 8px; width: 8px; height: 8px; border-radius: 999px; background: linear-gradient(180deg, #fff, #e6d7c9); opacity: 0.75; }
+
+/* Modal */
+.modal-backdrop { position: fixed; inset: 0; background: rgba(10, 18, 20, 0.6); backdrop-filter: blur(4px); display: grid; place-items: center; z-index: 9999; }
+.modal-card { width: min(92vw, 440px); background: var(--card); color: var(--text); border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,0.28); border: 1px solid rgba(0,0,0,0.08); padding: 16px; }
+.modal-card h2 { margin: 0; font-size: 1.3rem; color: var(--green); }
+.modal-points { margin: 6px 0 12px; color: var(--muted); }
+.modal-field { display: grid; gap: 6px; margin-bottom: 12px; }
+.modal-field label { font-size: 0.9rem; color: var(--muted); }
+.modal-field input { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.12); background: #fff; }
+.modal-message { margin: 6px 0 12px; font-size: 0.95rem; color: var(--green); }
+.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-btn { appearance: none; border: none; border-radius: 999px; padding: 10px 16px; font-weight: 600; box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.modal-btn--primary { color: #fff; background: linear-gradient(90deg, var(--green), var(--red)); }
+.modal-btn--ghost { color: var(--muted); background: #f5f7fa; }
+.advent-footer { margin-top: 12px; text-align: center; color: #d9efe6; }
+@media (min-width: 420px) { .advent-header h1 { font-size: 1.8rem; } .tile-number { font-size: 1.6rem; } }
+
+/* Optional snow overlay - toggle by adding 'snowy' class to <body> */
+body.snowy::before {
+  content: ""; position: fixed; inset: 0; pointer-events: none; z-index: 2147483647;
+  background-image:
+    radial-gradient(3px 3px at 15% 10%, rgba(255, 255, 255, 0.95), transparent 60%),
+    radial-gradient(2.5px 2.5px at 55% 30%, rgba(245, 245, 245, 0.9), transparent 60%),
+    radial-gradient(2px 2px at 80% 70%, rgba(238, 238, 238, 0.9), transparent 60%),
+    radial-gradient(1.5px 1.5px at 30% 85%, rgba(255, 255, 255, 0.85), transparent 60%);
+  animation: snowDrift 14s linear infinite; opacity: 0.85;
+}
+@keyframes snowDrift { 0% { transform: translateY(-40px
+)}}
