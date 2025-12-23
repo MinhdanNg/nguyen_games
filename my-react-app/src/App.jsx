@@ -1,9 +1,9 @@
 //import { useState } from 'react'
 import './App.css'
 //import themesData from "./themes";
+import { HashRouter, Routes, Route } from "react-router-dom";
 import AdventCalendar from "./Tasks";
 import Scoreboard from "./Christmas2025";
-import { HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
@@ -15,8 +15,6 @@ function App() {
     </HashRouter>
   );
 }
-
-
 
 /**
 function App() {
