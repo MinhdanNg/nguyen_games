@@ -5,9 +5,11 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdventCalendar from "./Tasks";
 import Scoreboard from "./Christmas2025";
 
+const repo_name = "/nguyen_games";
+
 function App() {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename={repo_name}>
       <Routes>
         <Route path="/" element={<AdventCalendar />} />
         <Route path="/scoreboard" element={<Scoreboard />} />
