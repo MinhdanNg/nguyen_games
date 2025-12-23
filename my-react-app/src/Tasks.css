@@ -20,7 +20,6 @@ body {
 .team-input { display: grid; gap: 6px; margin-bottom: 12px; }
 .team-input label { color: #daf6ea; font-size: 0.85rem; }
 .team-input input { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(255,255,255,0.2); background: rgba(255,255,255,0.9); }
-.loading { color: #fff; opacity: 0.85; }
 .advent-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
 .advent-tile {
   position: relative; display: inline-flex; align-items: center; justify-content: center;
@@ -32,20 +31,40 @@ body {
 }
 .advent-tile:active, .advent-tile:hover { transform: translateY(-2px); filter: brightness(1.05); }
 .advent-tile--inactive { opacity: 0.5; filter: grayscale(0.5); pointer-events: none; }
-.tile-number { font-size: 1.4rem; font-weight: 700; text-shadow: 0 1px 0 rgba(0,0,0,0.35); }
+.tile-number {
+  font-size: 3rem;
+  font-weight: 900;
+  color: #fff;
+  text-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25),
+    0 4px 8px rgba(0, 0, 0, 0.5);
+}
 .tile-dot { position: absolute; bottom: 8px; right: 8px; width: 8px; height: 8px; border-radius: 999px; background: linear-gradient(180deg, #fff, #e6d7c9); opacity: 0.75; }
 
 /* Modal */
 .modal-backdrop { position: fixed; inset: 0; background: rgba(10, 18, 20, 0.6); backdrop-filter: blur(4px); display: grid; place-items: center; z-index: 9999; }
 .modal-card { width: min(92vw, 440px); background: var(--card); color: var(--text); border-radius: 16px; box-shadow: 0 16px 40px rgba(0,0,0,0.28); border: 1px solid rgba(0,0,0,0.08); padding: 16px; }
 .modal-card h2 { margin: 0; font-size: 1.3rem; color: var(--green); }
-.modal-points { margin: 6px 0 12px; color: var(--muted); }
 .modal-field { display: grid; gap: 6px; margin-bottom: 12px; }
 .modal-field label { font-size: 0.9rem; color: var(--muted); }
-.modal-field input { padding: 10px 12px; border-radius: 10px; border: 1px solid rgba(0,0,0,0.12); background: #fff; }
-.modal-message { margin: 6px 0 12px; font-size: 0.95rem; color: var(--green); }
-.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
-.modal-btn { appearance: none; border: none; border-radius: 999px; padding: 10px 16px; font-weight: 600; box-shadow: 0 6px 14px rgba(0,0,0,0.12); }
+.modal-field input {
+  padding: 12px 14px;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0, 0.12);
+  background: #fff;
+  font-size: 1rem;
+  /* increase font size */
+}.modal-actions { display: flex; gap: 10px; justify-content: flex-end; }
+.modal-btn {
+  appearance: none;
+  border: none;
+  border-radius: 999px;
+  padding: 10px 16px;
+  font-weight: 600;
+  font-size: 1.5rem;
+  /* add this */
+  box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+}
 .modal-btn--primary { color: #fff; background: linear-gradient(90deg, var(--green), var(--red)); }
 .modal-btn--ghost { color: var(--muted); background: #f5f7fa; }
 .advent-footer { margin-top: 12px; text-align: center; color: #d9efe6; }
@@ -63,3 +82,49 @@ body.snowy::before {
 }
 @keyframes snowDrift { 0% { transform: translateY(-40px
 )}}
+
+/* Base paragraph styles for readability */
+p {
+  font-size: 1rem;
+  /* slightly larger than default */
+  line-height: 1.5;
+  /* more spacing for easier reading */
+  color: var(--text);
+  /* ensure contrast */
+  margin-bottom: 0.75rem;
+  /* consistent spacing between paragraphs */
+}
+
+/* Modal messages */
+.modal-message {
+  font-size: 1.05rem;
+  line-height: 1.4;
+  color: #f9e79f;
+  /* soft yellow, readable on dark background */
+  text-shadow: 0 1px 2px rgba(0, 0, 0, 0.6);
+}
+
+/* Loading text */
+.loading {
+  font-size: 1.05rem;
+  /* slightly bigger */
+  line-height: 1.5;
+  color: #fff;
+  opacity: 0.85;
+}
+
+/* Advent subtitle */
+.advent-subtitle {
+  font-size: 1.05rem;
+  /* slightly bigger for readability */
+  line-height: 1.4;
+  color: #e6f7f0;
+}
+
+.scoreboard-link {
+  display: inline-block;
+  margin-top: 6px;
+  color: #e6f7f0;
+  text-decoration: underline;
+  font-weight: 600;
+}

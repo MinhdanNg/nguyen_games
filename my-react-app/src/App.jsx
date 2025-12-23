@@ -1,16 +1,19 @@
 //import { useState } from 'react'
 import './App.css'
 //import themesData from "./themes";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import AdventCalendar from "./Tasks";
+import Scoreboard from "./Christmas2025";
 
 function App() {
-
-return (
-  <div className="black">
-    <div className="hiddenText">
-      <p>hemmelig tekst</p>
-    </div>
-  </div>
-    )
+  return (
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<AdventCalendar />} />
+        <Route path="/scoreboard" element={<Scoreboard />} />
+      </Routes>
+    </BrowserRouter>
+  );
 }
 
 

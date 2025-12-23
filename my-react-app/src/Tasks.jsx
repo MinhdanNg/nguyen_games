@@ -2,6 +2,7 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import "./Tasks.css"; // ensure this file exists and is imported once
+import { Link } from "react-router-dom";
 
 // Read env vars (Vite exposes only vars that start with VITE_)
 const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
@@ -57,6 +58,13 @@ export default function AdventCalendar() {
     setMessage("");
   }
 
+  function normalize(str) {
+  return String(str)
+    .toLowerCase()
+    .replace(/[^a-z0-9]/g, "") // remove spaces & punctuation
+    .trim();
+}
+
   // Submit password and award points to scoreboard
   async function submitPassword() {
     if (!openTask) return;
@@ -87,7 +95,16 @@ export default function AdventCalendar() {
       }
 
       // Simple client-side password check (OK for your one-time event)
-      const correct = String(password) === String(freshTask.password || "");
+      const input = normalize(password);
+
+      const accepted = Array.isArray(freshTask.password)
+        ? freshTask.password
+        : JSON.parse(freshTask.password || "[]");
+
+      const correct = accepted.some((answer) => {
+        return normalize(answer) === input;
+      });
+
       if (!correct) {
         setMessage("Incorrect password. Try again.");
         setSubmitting(false);
@@ -99,7 +116,7 @@ export default function AdventCalendar() {
 
       const { data: existing, error: existErr } = await supabase
         .from("scoreboard")
-        .select("team, score")
+        .select()
         .eq("team", teamName)
         .maybeSingle();
 
@@ -110,16 +127,32 @@ export default function AdventCalendar() {
         return;
       }
 
+      const completed = existing?.completed_tasks || [];
+      if (completed.includes(freshTask.id)) {
+        setMessage("Du har allerede gjort denne oppgaven!");
+        setSubmitting(false);
+        return;
+      }
+
+      console.log(completed)
+      console.log(freshTask.id)
+      console.log(completed.includes(freshTask.id))
+
       if (existing) {
         const newScore = (existing.score || 0) + (freshTask.points || 0);
+        const newCompletedTasks = [...completed, freshTask.id];
+
         const { error: updErr } = await supabase
           .from("scoreboard")
-          .update({ score: newScore })
+          .update({ 
+            score: newScore,
+            completed_tasks: newCompletedTasks 
+           })
           .eq("team", teamName);
 
         if (updErr) {
           console.error(updErr);
-          setMessage("Failed to update score.");
+          setMessage("ops en feil oppstod. prøv igjen...");
           setSubmitting(false);
           return;
         }
@@ -130,20 +163,20 @@ export default function AdventCalendar() {
 
         if (insErr) {
           console.error(insErr);
-          setMessage("Failed to create score.");
+          setMessage("ops en feil oppstod. prøv igjen...");
           setSubmitting(false);
           return;
         }
       }
 
-      setMessage("✅ Correct! +" + freshTask.points + " points awarded to " + teamName + ".");
+      setMessage("✅ Riktig! +" + freshTask.points + " poeng til " + teamName + ".");
       setTimeout(() => {
         setOpenTask(null);
         setSubmitting(false);
       }, 1000);
     } catch (e) {
       console.error(e);
-      setMessage("Something went wrong. Please try again.");
+      setMessage("ops en feil oppstod. prøv igjen...");
       setSubmitting(false);
     }
   }
@@ -153,7 +186,6 @@ export default function AdventCalendar() {
       <header className="advent-header">
         <h1>🎄 Advent Task Calendar</h1>
         <p className="advent-subtitle">Tap a number, enter the password, win points.</p>
-
         <div className="team-input">
           <label htmlFor="team">Team/Nickname</label>
           <input
@@ -174,9 +206,9 @@ export default function AdventCalendar() {
               key={t.id}
               className={"advent-tile " + (t.active === false ? "advent-tile--inactive" : "")}
               onClick={() => (t.active === false ? null : onTileClick(t))}
-              aria-label={"Task " + t.number}
+              aria-label={"Task " + t.id}
             >
-              <span className="tile-number">{t.number}</span>
+              <span className="tile-number">{t.id}</span>
               <span className="tile-dot" aria-hidden />
             </button>
           ))}
@@ -192,21 +224,20 @@ export default function AdventCalendar() {
           onClick={() => (!submitting ? setOpenTask(null) : null)}
         >
           <div className="modal-card" onClick={(e) => e.stopPropagation()}>
-            <h2 id="modal-title">Task #{openTask.number}</h2>
+            <h2 id="modal-title">Oppgave {openTask.id}</h2>
             <p className="modal-points">
-              Worth <strong>{openTask.points}</strong> points
+              Verdt <strong>{openTask.points}</strong> poeng
             </p>
 
             <div className="modal-field">
-              <label htmlFor="password">Password</label>
               <input
                 id="password"
-                type="password"
                 autoFocus
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                placeholder="Enter task password"
+                placeholder="Tast inn passordet"
                 disabled={submitting}
+                autoComplete="off"
               />
             </div>
 
@@ -218,14 +249,14 @@ export default function AdventCalendar() {
                 onClick={submitPassword}
                 disabled={submitting}
               >
-                {submitting ? "Sending…" : "Send"}
+                {submitting ? "Sender…" : "Send"}
               </button>
               <button
                 className="modal-btn modal-btn--ghost"
                 onClick={() => (!submitting ? setOpenTask(null) : null)}
                 disabled={submitting}
               >
-                Cancel
+                Avbryt
               </button>
             </div>
           </div>

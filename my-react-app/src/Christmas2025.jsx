@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { createClient } from "@supabase/supabase-js";
 import './Christmas2025.css'
+import { Link } from "react-router-dom";
 
 const supabase = createClient(import.meta.env.VITE_SUPABASE_URL, import.meta.env.VITE_SUPABASE_ANON_KEY);
 
-function App() {
+function Scoreboard() {
   const [teams, setTeams] = useState([]);
 
   useEffect(() => {
@@ -83,4 +84,4 @@ function App() {
 </div>
   );
 }
-export default App;
+export default Scoreboard;
