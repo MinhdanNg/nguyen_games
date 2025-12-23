@@ -1,22 +1,21 @@
 //import { useState } from 'react'
 import './App.css'
 //import themesData from "./themes";
-import { BrowserRouter, Routes, Route } from "react-router-dom";
 import AdventCalendar from "./Tasks";
 import Scoreboard from "./Christmas2025";
-
-const repo_name = "/nguyen_games";
+import { HashRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <BrowserRouter basename={repo_name}>
+    <HashRouter>
       <Routes>
         <Route path="/" element={<AdventCalendar />} />
         <Route path="/scoreboard" element={<Scoreboard />} />
       </Routes>
-    </BrowserRouter>
+    </HashRouter>
   );
 }
+
 
 
 /**
