@@ -9,8 +9,8 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/nguyen_games/" element={<AdventCalendar />} />
-        <Route path="/nguyen_games/scoreboard" element={<Scoreboard />} />
+        <Route path="/" element={<AdventCalendar />} />
+        <Route path="/scoreboard" element={<Scoreboard />} />
       </Routes>
     </BrowserRouter>
   );

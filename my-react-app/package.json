@@ -3,7 +3,7 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "homepage": "https://minhdanng.github.io/temp_jeopardy/",
+  "homepage": "https://minhdanng.github.io/nguyen_games/",
   "scripts": {
     "predeploy": "npm run build",
     "deploy": "gh-pages -d dist",
