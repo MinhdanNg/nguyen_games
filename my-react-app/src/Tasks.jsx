@@ -105,12 +105,6 @@ export default function AdventCalendar() {
         return normalize(answer) === input;
       });
 
-      if (!correct) {
-        setMessage("Incorrect password. Try again.");
-        setSubmitting(false);
-        return;
-      }
-
       // Award points to scoreboard (table: scoreboard with columns team, score)
       const teamName = team.trim();
 
@@ -124,6 +118,27 @@ export default function AdventCalendar() {
         console.error(existErr);
         setMessage("Failed to check scoreboard.");
         setSubmitting(false);
+        return;
+      }
+
+      if (!correct) {
+        setMessage("Incorrect password. Try again.");
+        setSubmitting(false);
+        const newScore = (existing.score || 0) - 1;
+
+        const { error: updErr } = await supabase
+          .from("scoreboard")
+          .update({ 
+            score: newScore,
+           })
+          .eq("team", teamName);
+
+          if (updErr) {
+          console.error(updErr);
+          setMessage("ops en feil oppstod. prøv igjen...");
+          setSubmitting(false);
+          return;
+        }
         return;
       }
 
